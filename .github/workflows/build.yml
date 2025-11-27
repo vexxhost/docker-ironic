@@ -16,12 +16,12 @@ jobs:
       id-token: write
       packages: write
     steps:
-      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@2024.2
+      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@main
         with:
           repository: openstack/ironic
           ref: a54c628f7b3cc90f9eb0f9f7e179b537aa348fb7
 
-      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@2024.2
+      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@main
         with:
           image-name: ironic
           build-contexts: ironic=openstack/ironic
