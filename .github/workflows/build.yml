@@ -20,7 +20,7 @@ jobs:
       - uses: vexxhost/docker-atmosphere/.github/actions/checkout@main
         with:
           repository: openstack/ironic
-          ref: 5f59aa0b2859afce059500a629eb3ef3ecc03dbf # master
+          ref: c2b5580b752bfa45cfa398c81fb1a305fe35464c # master
 
       - uses: vexxhost/docker-atmosphere/.github/actions/build-image@main
         with:
