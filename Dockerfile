@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 # Atmosphere-Rebuild-Time: 2024-06-25T22:49:25Z
 
-FROM ghcr.io/vexxhost/openstack-venv-builder:zed@sha256:5efe526ca712b21940b14af0c0724d798985e8f8c421991109b29e3e09ed091e AS build
+FROM ghcr.io/vexxhost/openstack-venv-builder:zed@sha256:6ccb2b26b82f3d8f2a2de2f4ff93ef478676586ef4c4707ce27edeccaabaa49a AS build
 RUN --mount=type=bind,from=ironic,source=/,target=/src/ironic,readwrite <<EOF bash -xe
 uv pip install \
     --constraint /upper-constraints.txt \
@@ -11,7 +11,7 @@ uv pip install \
         sushy
 EOF
 
-FROM ghcr.io/vexxhost/python-base:zed@sha256:43e13657031dc049e919108abdb5e70dbff13d31aef7f297bc45bdadf9330862
+FROM ghcr.io/vexxhost/python-base:zed@sha256:c99456405fd2dfb033cbb7c95ecd2c9a4a6b625fb6cfe5c80ad47cd54e8a1ee4
 RUN \
     groupadd -g 42424 ironic && \
     useradd -u 42424 -g 42424 -M -d /var/lib/ironic -s /usr/sbin/nologin -c "Ironic User" ironic && \
