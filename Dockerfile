@@ -10,7 +10,7 @@ uv pip install \
         sushy
 EOF
 
-FROM ghcr.io/vexxhost/python-base:2025.2@sha256:359d28ad9ee909064ede3501fd20694c4d807ff5d155bf845f37cfa2b0100b1d
+FROM ghcr.io/vexxhost/python-base:2025.2@sha256:232cc1c7059c99994c362024972f4dd23b809084f1d9c00ef743192c28f550cb
 RUN \
     groupadd -g 42424 ironic && \
     useradd -u 42424 -g 42424 -M -d /var/lib/ironic -s /usr/sbin/nologin -c "Ironic User" ironic && \
