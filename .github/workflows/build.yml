@@ -17,12 +17,12 @@ jobs:
       packages: write
       pull-requests: write
     steps:
-      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@5923a8fba3a98cf17e36583cc498d5e70a01c482 # main
+      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@b35756699f2b0bf127417a05d0a7358d18920c94 # main
         with:
           repository: openstack/ironic
           ref: 0505e21cff88a58485d78760ab5075ad1754ff98 # unmaintained/2023.1
 
-      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@5923a8fba3a98cf17e36583cc498d5e70a01c482 # main
+      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@b35756699f2b0bf127417a05d0a7358d18920c94 # main
         with:
           image-name: ironic
           build-contexts: ironic=openstack/ironic
