@@ -25,12 +25,12 @@ jobs:
         with:
           egress-policy: audit
 
-      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@2b0040e59869e408a94f1e92e67fa47035c50336 # main
+      - uses: vexxhost/docker-atmosphere/.github/actions/checkout@e72a4bb3670421e6ec38413e3e90b11259d86ea1 # main
         with:
           repository: openstack/ironic
           ref: 91e5754d6e7858b49a61455d2f2a8b781b540e4d # stable/2026.1
 
-      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@2b0040e59869e408a94f1e92e67fa47035c50336 # main
+      - uses: vexxhost/docker-atmosphere/.github/actions/build-image@e72a4bb3670421e6ec38413e3e90b11259d86ea1 # main
         with:
           image-name: ironic
           build-contexts: ironic=openstack/ironic
