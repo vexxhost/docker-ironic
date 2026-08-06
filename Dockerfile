@@ -3,10 +3,10 @@
 # Atmosphere-Rebuild-Time: 2024-06-25T22:49:25Z
 
 FROM ghcr.io/vexxhost/openstack-venv-builder:2026.1@sha256:659c67995c0c06c1d16a0235c4c956f734f8da49d498e72df1ad3ea1c23c47a4 AS build
-RUN --mount=type=bind,from=ironic,source=/,target=/src/ironic,readwrite <<EOF bash -xe
+RUN <<EOF bash -xe
 uv pip install \
     --constraint /upper-constraints.txt \
-        /src/ironic \
+        "ironic==35.0.1+a8e.49.1" \
         python-dracclient \
         sushy
 EOF
