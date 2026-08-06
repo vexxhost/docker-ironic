@@ -8,7 +8,8 @@ uv pip install \
     --constraint /upper-constraints.txt \
         "ironic==${IRONIC_VERSION}" \
         python-dracclient \
-        sushy
+        sushy \
+        sushy-oem-idrac
 EOF
 
 FROM ghcr.io/vexxhost/python-base:2025.1@sha256:aa2dc02c5662a08071a27d11ecc1bc9d9690c68c6006caa48c18fb9501818bc3
