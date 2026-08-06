@@ -2,10 +2,10 @@
 # SPDX-License-Identifier: GPL-3.0-or-later
 
 FROM ghcr.io/vexxhost/openstack-venv-builder:2025.1@sha256:c8fce46ccda5251f5c59006603cc0594599b2d73b65eabbc8d73bec103846541 AS build
-RUN --mount=type=bind,from=ironic,source=/,target=/src/ironic,readwrite <<EOF bash -xe
+RUN <<EOF bash -xe
 uv pip install \
     --constraint /upper-constraints.txt \
-        /src/ironic \
+        "ironic==29.0.6+a8e.0.2" \
         python-dracclient \
         sushy
 EOF
