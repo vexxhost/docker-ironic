@@ -25,7 +25,16 @@ jobs:
         with:
           egress-policy: audit
 
+      - name: Check out Ironic Prometheus Exporter
+        uses: actions/checkout@08c6903cd8c0fde910a37f88322edcfb5dd907a8 # v5.0.0
+        with:
+          repository: openstack/ironic-prometheus-exporter
+          ref: f3d2a9cdfe385c835ed707962f9c81f9fc730f7b # 4.9.0
+          path: .build/ironic-prometheus-exporter
+
       - uses: vexxhost/docker-atmosphere/.github/actions/build-image@b6113e0668dc85929f783667f0347fc76b272844 # main
         with:
           image-name: ironic
+          build-contexts: |
+            ironic_prometheus_exporter=.build/ironic-prometheus-exporter
           push: ${{ github.event_name != 'pull_request' }}
