@@ -4,12 +4,16 @@
 
 FROM ghcr.io/vexxhost/openstack-venv-builder:main@sha256:72de518588edef4e8273467df4c8e4ccd7d1241d7b24fa1652eb9c45df60795b AS build
 ARG IRONIC_VERSION=38.0.0+a8e.36.1
-RUN <<EOF bash -xe
-uv pip install \
+ARG IRONIC_PROMETHEUS_EXPORTER_VERSION=4.9.0
+RUN --mount=type=bind,from=ironic_prometheus_exporter,source=/,target=/src/ironic-prometheus-exporter <<EOF bash -xe
+cp -a /src/ironic-prometheus-exporter /tmp/ironic-prometheus-exporter
+PBR_VERSION="${IRONIC_PROMETHEUS_EXPORTER_VERSION}" uv pip install \
     --constraint /upper-constraints.txt \
         "ironic==${IRONIC_VERSION}" \
+        /tmp/ironic-prometheus-exporter \
         python-dracclient \
         sushy
+rm -rf /tmp/ironic-prometheus-exporter
 EOF
 
 FROM ghcr.io/vexxhost/python-base:main@sha256:cd5f90fbe48ea093f842d4a685b9edfa5c80f4768b066f9b9957bbf47155c245
@@ -26,3 +30,5 @@ apt-get clean
 rm -rf /var/lib/apt/lists/*
 EOF
 COPY --from=build --link /var/lib/openstack /var/lib/openstack
+RUN --mount=type=bind,source=tests/test-ironic-prometheus-exporter.sh,target=/tmp/test-ironic-prometheus-exporter.sh \
+    bash /tmp/test-ironic-prometheus-exporter.sh
