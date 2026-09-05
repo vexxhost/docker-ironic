@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: © 2025 VEXXHOST, Inc.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-FROM ghcr.io/vexxhost/openstack-venv-builder:2025.1@sha256:22950e3d51514a8a715a91904426aab189375f9f04fd723a8626991d6d5d6bdb AS build
+FROM ghcr.io/vexxhost/openstack-venv-builder:2025.1@sha256:04dfd767c47b9d8d979d88df20dfca6d79474816c9bab92d4fe498904baece15 AS build
 ARG IRONIC_VERSION=29.0.6+a8e.0.2
 RUN <<EOF bash -xe
 uv pip install \
@@ -12,7 +12,7 @@ uv pip install \
         sushy-oem-idrac
 EOF
 
-FROM ghcr.io/vexxhost/python-base:2025.1@sha256:aa2dc02c5662a08071a27d11ecc1bc9d9690c68c6006caa48c18fb9501818bc3
+FROM ghcr.io/vexxhost/python-base:2025.1@sha256:de319701caec41393e601422a87d844504de2d9a35728869385a72f556df5622
 RUN \
     groupadd -g 42424 ironic && \
     useradd -u 42424 -g 42424 -M -d /var/lib/ironic -s /usr/sbin/nologin -c "Ironic User" ironic && \
