@@ -1,7 +1,7 @@
 # SPDX-FileCopyrightText: © 2025 VEXXHOST, Inc.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-FROM ghcr.io/vexxhost/openstack-venv-builder:2025.2@sha256:138d385ed231aa7c980905b261548eaeb2a3c466c4d428aba45c258ab259363c AS build
+FROM ghcr.io/vexxhost/openstack-venv-builder:2025.2@sha256:02cb6fed4da7699585d579125bf09bfc4a693acfb97132a50b9a20f7657b32ba AS build
 ARG IRONIC_VERSION=32.0.1+a8e.22.2
 RUN <<EOF bash -xe
 uv pip install \
