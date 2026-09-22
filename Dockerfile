@@ -17,6 +17,7 @@ RUN \
     useradd -u 42424 -g 42424 -M -d /var/lib/ironic -s /usr/sbin/nologin -c "Ironic User" ironic && \
     mkdir -p /etc/ironic /var/log/ironic /var/lib/ironic /var/cache/ironic && \
     chown -Rv ironic:ironic /etc/ironic /var/log/ironic /var/lib/ironic /var/cache/ironic
+ADD https://github.com/novnc/noVNC.git#v1.6.0 /usr/share/novnc
 RUN <<EOF bash -xe
 apt-get update -qq
 apt-get install -qq -y --no-install-recommends \
