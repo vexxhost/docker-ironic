@@ -26,4 +26,6 @@ apt-get install -qq -y --no-install-recommends \
 apt-get clean
 rm -rf /var/lib/apt/lists/*
 EOF
+ARG TARGETARCH
+ADD --chmod=755 https://dl.k8s.io/release/v1.34.1/bin/linux/${TARGETARCH}/kubectl /usr/local/bin/kubectl
 COPY --from=build --link /var/lib/openstack /var/lib/openstack
