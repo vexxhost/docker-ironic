@@ -4,12 +4,20 @@
 
 FROM ghcr.io/vexxhost/openstack-venv-builder:main@sha256:c0add116e1e2c3c1d70131612528c3c3a6e41be6287d8f0f5fba67adbebb91bb AS build
 ARG IRONIC_VERSION=38.0.0+a8e.36.1
-RUN <<EOF bash -xe
+RUN --mount=type=bind,source=patches/openstack/ironic,target=/patches/openstack/ironic <<'EOF' bash -xe
 uv pip install \
     --constraint /upper-constraints.txt \
         "ironic==${IRONIC_VERSION}" \
         python-dracclient \
         sushy
+# Apply runtime hunks; upstream tests and release notes are not installed here.
+site_packages="$(/var/lib/openstack/bin/python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
+git -C "$site_packages" apply \
+    --include=ironic/common/wsgi_service.py \
+    --include=ironic/conf/api.py \
+    --include=ironic/conf/json_rpc.py \
+    /patches/openstack/ironic/*.patch
+/var/lib/openstack/bin/python -c 'from ironic.conf import CONF; from ironic.common import wsgi_service'
 EOF
 
 FROM ghcr.io/vexxhost/python-base:main@sha256:ab6c60c427ade851e06c8152f94d2c3406436ab2d9854714c6f9417ed292e56d
