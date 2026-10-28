@@ -4,19 +4,16 @@
 
 FROM ghcr.io/vexxhost/openstack-venv-builder:main@sha256:c0add116e1e2c3c1d70131612528c3c3a6e41be6287d8f0f5fba67adbebb91bb AS build
 ARG IRONIC_VERSION=38.0.0+a8e.36.1
-RUN --mount=type=bind,source=patches/openstack/ironic,target=/patches/openstack/ironic <<'EOF' bash -xe
+RUN --mount=type=bind,source=build,target=/build \
+    --mount=type=bind,source=patches,target=/patches <<'EOF' bash -xe
+uv run --index https://pypi.org/simple --script /build/patch-wheel.py \
+    --constraint /upper-constraints.txt \
+    "ironic==${IRONIC_VERSION}" /patches/openstack/ironic /tmp/patched-wheels
 uv pip install \
     --constraint /upper-constraints.txt \
-        "ironic==${IRONIC_VERSION}" \
+        /tmp/patched-wheels/*.whl \
         python-dracclient \
         sushy
-# Apply runtime hunks; upstream tests and release notes are not installed here.
-site_packages="$(/var/lib/openstack/bin/python -c 'import sysconfig; print(sysconfig.get_paths()["purelib"])')"
-git -C "$site_packages" apply \
-    --include=ironic/common/wsgi_service.py \
-    --include=ironic/conf/api.py \
-    --include=ironic/conf/json_rpc.py \
-    /patches/openstack/ironic/*.patch
 /var/lib/openstack/bin/python -c 'from ironic.conf import CONF; from ironic.common import wsgi_service'
 EOF
 
