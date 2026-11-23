@@ -13,7 +13,7 @@ uv pip install \
         "ironic==${IRONIC_VERSION}" \
         python-dracclient \
         sushy==5.2.2+a8e.0.4 \
-        sushy-oem-idrac==5.0.0+a8e.5.1
+        sushy-oem-idrac==6.0.0
 EOF
 
 FROM ghcr.io/vexxhost/python-base:2024.2@sha256:103897daed441a3504c7222b7cb07cc23ba06f463f003b370d99e0acb18adefa
