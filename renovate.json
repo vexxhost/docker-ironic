@@ -1,4 +1,12 @@
 {
   "$schema": "https://docs.renovatebot.com/renovate-schema.json",
-  "extends": ["local>vexxhost/docker-atmosphere"]
+  "extends": ["local>vexxhost/docker-atmosphere"],
+  "packageRules": [
+    {
+      "description": "Keep the VEXXHOST sushy builds each release ships. packages.vexxhost.com only serves those builds, and newer upstream releases change the Dell OEM integration Ironic relies on.",
+      "matchDatasources": ["pypi"],
+      "matchPackageNames": ["sushy", "sushy-oem-idrac"],
+      "enabled": false
+    }
+  ]
 }
