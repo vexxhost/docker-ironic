@@ -1,15 +1,18 @@
 # SPDX-FileCopyrightText: © 2025 VEXXHOST, Inc.
 # SPDX-License-Identifier: GPL-3.0-or-later
 
-FROM ghcr.io/vexxhost/openstack-venv-builder:2025.1@sha256:bbf82a3d41a1f77f7d100e134f105fd5f215b1f9ed1a03a68c628ebe60c6275f AS build
+FROM ghcr.io/vexxhost/openstack-venv-builder:2025.1@sha256:1c59562cda6bffe43e671f7171cbfd4f4e308bde88c51e9c5e7fc8e9740d4e68 AS build
 ARG IRONIC_VERSION=29.1.0+a8e.7.2
+# vexxhost/requirements pins upstream sushy, which packages.vexxhost.com does
+# not serve. Install the VEXXHOST builds of sushy that this release ships.
 RUN <<EOF bash -xe
+grep -vE '^sushy(-oem-idrac)?===' /upper-constraints.txt > /tmp/upper-constraints.txt
 uv pip install \
-    --constraint /upper-constraints.txt \
+    --constraint /tmp/upper-constraints.txt \
         "ironic==${IRONIC_VERSION}" \
         python-dracclient \
-        sushy \
-        sushy-oem-idrac
+        sushy==5.5.1+a8e.0.3 \
+        sushy-oem-idrac==5.0.0+a8e.5.1
 EOF
 
 FROM ghcr.io/vexxhost/python-base:2025.1@sha256:053e0183e08774439ccb21789a21fdd54e71f39e5960eaa9be5b0eaa4b92c074
