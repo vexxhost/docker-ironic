@@ -11,7 +11,7 @@ uv pip install \
     --constraint /tmp/upper-constraints.txt \
         "ironic==${IRONIC_VERSION}" \
         python-dracclient \
-        sushy==5.5.1+a8e.0.3 \
+        sushy==5.14.0 \
         sushy-oem-idrac==5.0.0+a8e.5.1
 EOF
 
